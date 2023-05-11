@@ -3,12 +3,27 @@ import { Square } from "./components/Square.jsx";
 import { TURNS } from "./constants.js";
 import { checkWinner, checkEndGame } from "./logic/board.js";
 import { WinnerModal } from "./components/WinnerModal.jsx";
+import { Game } from "./components/Game.jsx";
 import confetti from "canvas-confetti";
 import "./App.css";
 
 function App() {
-  const [board, setBoard] = useState(Array(9).fill(null));
-  const [turn, setTurn] = useState(TURNS.X);
+  const [board, setBoard] = useState(() => {
+    const storedBoard = window.localStorage.getItem("board");
+    if (storedBoard) {
+      return JSON.parse(storedBoard);
+    }
+    return Array(9).fill(null);
+  });
+
+  const [turn, setTurn] = useState(() => {
+    const storedTurn = window.localStorage.getItem("turn");
+    if (storedTurn) {
+      return storedTurn;
+    }
+    return TURNS.X;
+  });
+
   const [winner, setwinner] = useState(null);
 
   const updateBoard = (index) => {
@@ -23,6 +38,9 @@ function App() {
     const newTurn = turn === TURNS.X ? TURNS.O : TURNS.X;
     setTurn(newTurn);
 
+    window.localStorage.setItem("board", JSON.stringify(newBoard));
+    window.localStorage.setItem("turn", newTurn);
+
     const newWinner = checkWinner(newBoard);
     if (newWinner) {
       confetti();
@@ -36,6 +54,9 @@ function App() {
     setBoard(Array(9).fill(null));
     setTurn(TURNS.X);
     setwinner(null);
+
+    window.localStorage.removeItem("board");
+    window.localStorage.removeItem("turn");
   };
 
   return (
@@ -43,17 +64,10 @@ function App() {
       <h1>
         The <span>best </span>Tic Tac Toe game on planet Earth
       </h1>
+
       <main className="board">
         <button onClick={restartGame}>Restart</button>
-        <section className="game">
-          {board.map((_, index) => {
-            return (
-              <Square key={index} index={index} updateBoard={updateBoard}>
-                {board[index]}
-              </Square>
-            );
-          })}
-        </section>
+        <Game board={board} updateBoard={updateBoard} />
 
         <section className="turn">
           <Square isSelected={turn === TURNS.X}>{TURNS.X}</Square>
