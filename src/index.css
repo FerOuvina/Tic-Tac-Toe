@@ -1,12 +1,13 @@
 :root {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   font-size: 16px;
   line-height: 24px;
   font-weight: 400;
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  background-color: #18061f;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -35,8 +36,10 @@ body {
   text-align: center;
 }
 
-.board h1 {
+h1 {
+  font-size: 2.5rem;
   color: #eee;
+  text-decoration: underline;
   margin-bottom: 16px;
 }
 
@@ -44,18 +47,19 @@ body {
   padding: 8px 12px;
   margin: 25px;
   background: transparent;
-  border: 2px solid #eee;
+  border: 2px solid #666363;
   color: #eee;
   width: 100px;
   border-radius: 5px;
   transition: 0.2s;
   font-weight: bold;
   cursor: pointer;
+  transition: all .4s ease-in-out;
 }
 
 .board button:hover {
-  background: #eee;
-  color: #222;
+  background: rgba(253, 229, 197, 0.801);
+  color: #3f3e3e;
 }
 
 .board .game {
@@ -81,9 +85,25 @@ body {
   border-color: transparent;
 }
 
+.square {
+  width: 100px;
+  height: 100px;
+  border: 2px solid #666363;
+  border-radius: 5px;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  font-size: 48px;
+  transition: all 0.3s ease-in-out;
+}
+
+.square:hover {
+  background: rgba(253, 229, 197, 0.801);
+}
+
 .square.is-selected {
   color: #fff;
-  background: #09f;
+  background: rgba(253, 229, 197, 0.801);
 }
 
 .winner {
@@ -98,10 +118,11 @@ body {
 }
 
 .winner .text {
+  transition: all .6s ease-in-out;
   background: #111;
   height: 300px;
   width: 320px;
-  border: 2px solid #eee;
+  border: 2px solid #666363;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
@@ -110,22 +131,32 @@ body {
   gap: 20px;
 }
 
+.winner .text:hover {
+  border: 2px solid #eee;
+}
+
 .winner .win {
   margin: 0 auto;
   width: fit-content;
-  border: 2px solid #eee;
+  background: rgba(253, 229, 197, 0.801);
   border-radius: 10px;
   display: flex;
   gap: 15px;
 }
 
-.square {
-  width: 100px;
-  height: 100px;
-  border: 2px solid #eee;
-  border-radius: 5px;
-  display: grid;
-  place-items: center;
-  cursor: pointer;
-  font-size: 48px;
+.footer {
+  padding-top: 1rem;
+}
+
+.footer__link {
+  text-decoration: none;
+}
+
+.footer__link:visited {
+  color: #DB2957;
+}
+
+.footer__link:hover {
+  text-decoration: underline;
+  color: #ff5ec9;
 }
