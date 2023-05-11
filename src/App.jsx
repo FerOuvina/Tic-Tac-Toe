@@ -4,6 +4,9 @@ import { TURNS } from "./constants.js";
 import { checkWinner, checkEndGame } from "./logic/board.js";
 import { WinnerModal } from "./components/WinnerModal.jsx";
 import { Game } from "./components/Game.jsx";
+import { Footer } from "./components/Footer.jsx";
+import useSound from "use-sound";
+import niceSound from "./sounds/Nice.mp3";
 import confetti from "canvas-confetti";
 import "./App.css";
 
@@ -24,6 +27,7 @@ function App() {
     return TURNS.X;
   });
 
+  const [play] = useSound(niceSound, {volume: 0.5});
   const [winner, setwinner] = useState(null);
 
   const updateBoard = (index) => {
@@ -43,7 +47,21 @@ function App() {
 
     const newWinner = checkWinner(newBoard);
     if (newWinner) {
-      confetti();
+      play();
+      confetti({
+        particleCount: 100,
+        spread: 70,
+        gravity: 0.8,
+        angle: 120,
+        origin: { x: 1 },
+      });
+      confetti({
+        particleCount: 100,
+        spread: 70,
+        gravity: 0.8,
+        angle: 60,
+        origin: { x: 0 },
+      });
       setwinner(newWinner);
     } else if (checkEndGame(newBoard)) {
       setwinner(false);
@@ -75,6 +93,8 @@ function App() {
         </section>
 
         <WinnerModal restartGame={restartGame} winner={winner} />
+
+        <Footer />
       </main>
     </>
   );
